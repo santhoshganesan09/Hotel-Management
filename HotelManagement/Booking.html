@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+
+        
+        h1{
+            text-align: center;
+            font-size: 30px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            
+        }
+        p{
+            margin: 10px;
+            text-align: center;
+
+        }
+        h2{
+           text-align: center;
+            font-size: 25px;
+        }
+
+        body{
+            font-family: 'Open Sans', sans-serif;
+        }
+        #signUpForm {
+            max-width: 500px;
+            background-color: #ffffff;
+            margin: 40px auto;
+            padding: 40px;
+            box-shadow: 0px 6px 18px rgb(0 0 0 / 9%);
+            border-radius: 12px;
+        }
+        #signUpForm .form-header {
+            gap: 5px;
+            text-align: center;
+            font-size: .9em;
+        }
+        #signUpForm .form-header .stepIndicator {
+            position: relative;
+            flex: 1;
+            padding-bottom: 30px;
+        }
+        #signUpForm .form-header .stepIndicator.active {
+            font-weight: 600;
+        }
+        #signUpForm .form-header .stepIndicator.finish {
+            font-weight: 600;
+            color: #730e8f;
+        }
+        #signUpForm .form-header .stepIndicator::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            z-index: 9;
+            width: 20px;
+            height: 20px;
+            background-color: #e5c5e9fd;
+            border-radius: 50%;
+            border: 3px solid #f4ecf5ec;
+        }
+        #signUpForm .form-header .stepIndicator.active::before {
+            background-color: #a129d8;
+            border: 3px solid #f1d5f9;
+        }
+        #signUpForm .form-header .stepIndicator.finish::before {
+            background-color: #c70ffac6;
+            border: 3px solid #e4a8ec;
+        }
+        #signUpForm .form-header .stepIndicator::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 8px;
+            width: 100%;
+            height: 3px;
+            background-color: #f3f3f3;
+        }
+        #signUpForm .form-header .stepIndicator.active::after {
+            background-color: #9c3ce6;
+        }
+        #signUpForm .form-header .stepIndicator.finish::after {
+            background-color: #7a0096;
+        }
+        #signUpForm .form-header .stepIndicator:last-child:after {
+            display: none;
+        }
+        #signUpForm input {
+            padding: 15px 20px;
+            width: 100%;
+            font-size: 1em;
+            border: 1px solid #e3e3e3;
+            border-radius: 5px;
+        }
+        #signUpForm input:focus {
+            border: 1px solid #b53dd6;
+            outline: 0;
+        }
+        #signUpForm input.invalid {
+            border: 1px solid #ffaba5;
+        }
+        #signUpForm .step {
+          display: none;
+        }
+        #signUpForm .form-footer{
+            overflow:auto;
+            gap: 20px;
+        }
+        #signUpForm .form-footer button{
+            background-color: #9649a8;
+            border: 1px solid #ae03f800 !important;
+            color: #ffffff;
+            border: none;
+            padding: 13px 30px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            flex: 1;
+            margin-top: 5px;
+        }
+        #signUpForm .form-footer button:hover {
+          opacity: 0.8;
+        }
+        
+        #signUpForm .form-footer #prevBtn {
+            background-color: #fff;
+            color: #930096;
+        }
+
+        table,th,td{
+            border: 1px solid rgba(0, 0, 0, 0.14);
+            border-collapse: collapse;
+            color: rgba(137, 43, 226, 0.547);
+            width: 100%;
+            padding: 5px;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            
+        }
+       h3{
+        font-size: 15px;
+       }
+        
+    </style>
+</head>
+<body>
+    
+  <div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6 p-5">
+            <!-- room details -->
+            <div class="room__details">
+              <img  style="border-radius: 20px;box-shadow: 2px 2px 10px;" src="" alt="room" id="detailsImage" height="100%" width="100%"><br><br><br>
+              <h1 id="detailsTitle"></h1>
+              <p id="detailsDescription"></p>
+              <h2 id="detailsPrice"></h2>
+              <!-- Add more details or formatting as needed -->
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 p-6">
+            <h1 class="text-center fs-4">Luxury Hotel Booking</h1>
+            <form class="p-2" id="signUpForm" action="#!">
+                <!-- form content -->
+                  <!-- start step indicators -->
+    <div class="form-header d-flex mb-4">
+      <span class="stepIndicator">Personal Details</span>
+      <span class="stepIndicator">Booking Details</span>
+      <span class="stepIndicator">Payment Details</span>
+  </div>
+  <!-- end step indicators -->
+
+  <!-- step one -->
+  <div class="step m-3">
+   
+    <div class="mb-3">
+      <input type="text" id="fname" placeholder="First Name" oninput="this.className = ''" name="fname">
+  </div>
+  <div class="mb-3">
+    <input type="text" placeholder="Last Name" oninput="this.className = ''" name="lname">
+</div>
+    <div class="mb-3">
+        <input type="email" id="email" placeholder="Email Address" oninput="this.className = ''" name="email">
+    </div>
+
+    <div class="mb-3">
+      <label for="dob">DOB</label>
+        <input type="date" placeholder="DOB" oninput="this.className = ''" name="dob">
+    </div>
+
+    <div class="mb-3">
+        <input type="text" id="phnumber" placeholder="Phone number" oninput="this.className = ''" name="phnumber">
+    </div>
+    
+    <div class="mb-3">
+      <input type="text" placeholder="Address" oninput="this.className = ''" name="address">
+  </div>
+  
+  <div class="mb-3">
+    <input type="text" placeholder="City" oninput="this.className = ''" name="city">
+</div>
+<div class="mb-3">
+  <input type="text" placeholder="Zip" oninput="this.className = ''" name="zip">
+</div>
+
+
+</div>
+
+<!-- step two -->
+<div class="step m-3">
+    
+    
+    <div class="mb-3">
+      <input type="text" placeholder="First Name" oninput="this.className = ''" name="fname2">
+  </div>
+  <div class="mb-3">
+    <input type="text" placeholder="Last Name" oninput="this.className = ''" name="lname">
+</div>
+<div class="mb-3">
+  <label for="check_indate">Check-in Date:</label>
+  <input id="check-indate" type="date" placeholder="Check-in Date" oninput="updateInformation()" name="check_indate">
+</div>
+<div class="mb-3">
+<label for="check_intime">Check-in Time:</label>
+<input type="time" placeholder="Check-in Time" oninput="this.className = ''" name="check_intime">
+</div>
+<div class="mb-3">
+<label for="check_outdate">Check-out Date:</label>
+<input id="check-outdate" type="date" placeholder="Check-out Date" oninput="updateInformation()" name="check_outdate">
+</div>
+<div class="mb-3">
+<label for="check_outtime">Check-out Time:</label>
+<input type="time" placeholder="Check-out Time" oninput="this.className = ''" name="check_outtime">
+</div>
+
+
+<div class="mb-3">
+
+<label for="room">Room Preferance:</label><br>
+
+<div class="form-check form-check-inline">
+<input  type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+<label class="form-check-label" for="inlineRadio1">Standard</label>
+</div>
+<div class="form-check form-check-inline">
+<input  type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+<label class="form-check-label" for="inlineRadio2">Deluxe</label>
+</div>
+<div class="form-check form-check-inline">
+<input  type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+<label class="form-check-label" for="inlineRadio3">Suite</label>
+</div>
+</div>
+<br>
+
+<div class="row mb-3">
+<div class="col">
+<label for="validationDefault04 inline" class="form-label ">Adutls</label>
+<select class="form-select small" id="adults" oninput="updateInformation()">
+<option selected="" disabled="" value=""></option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+</select>
+</div>
+<div class="col">
+<label for="validationDefault04 inline" class="form-label ">Children</label>
+<select class="form-select small" id="children" oninput="updateInformation()">
+<option selected="" disabled="" value=""></option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+</select>
+</div>
+</div>
+
+
+</div>
+
+  <!-- step three -->
+  <div class="step m-3">
+      
+      <div class="mb-3">
+          <input type="text" id="fname1" placeholder="Full name" oninput="this.className = ''" name="fname1">
+      </div>
+      <div class="mb-3">
+          <input type="text" id="mobile1" placeholder="Mobile" oninput="this.className = ''" name="mobile1">
+      </div>
+      <div class="mb-3">
+        <table>
+          <tr>
+              <td>
+                <h3> PRODUCT</h3>
+              </td>
+              <td>
+                  <h3>TOTAL</h3>
+              </td>
+              
+          </tr>
+         
+          <tr>
+              <td>
+                  <h3>Family Rooms * 1</h3>
+                  <div id="selected-dates"></div>
+                  <div id="duration"></div>
+                  <div id="selected-adults"></div>
+                  <div id="selected-children"></div>
+
+              </td>
+              <td>
+                  <h3 id="price">$</h3>
+              </td>
+          </tr>
+     
+          <tr>
+              <td>
+                  <h3>SUBTOTAL</h3>
+              </td>
+              <TD>
+                  <h3 id="Subtotalprice">$</h3>
+              </TD>
+          </tr>
+  
+          <tr>
+              <td>
+                  <h3>
+                      TOTAL
+                  </h3>
+  
+              </td>
+              <TD>
+                  <H3 id="totalprice">$</H3>
+              </TD>
+          </tr>
+     
+     
+      </table>
+      </div>
+      
+     
+      
+            
+  </div>
+
+  <!-- start previous / next buttons -->
+  <div class="form-footer d-flex">
+      <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+      <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+  </div>
+  <!-- end previous / next buttons -->
+            </form>
+        </div>
+    </div>
+</div>
+    
+    
+    
+  <script>
+
+
+
+//update the price for form
+
+
+
+//paymentDetails form
+function updateInformation() {
+        // Get the selected Check-in and Check-out dates
+
+
+
+        var fname = document.getElementById('fname').value;
+        var email = document.getElementById('email').value;
+        var phnumber= document.getElementById('phnumber').value;
+        var checkInDate = document.getElementById('check-indate').value;
+        var checkOutDate = document.getElementById('check-outdate').value;
+
+        // Get the selected number of adults and children
+        var selectedAdults = document.getElementById('adults').value;
+        var selectedChildren = document.getElementById('children').value;
+
+        // Show the selected dates, duration, adults, and children
+        document.getElementById('selected-dates').innerHTML = "Check-in Date: " + checkInDate + "<br>Check-out Date: " + checkOutDate;
+        var duration = calculateDuration(checkInDate, checkOutDate);
+        document.getElementById('duration').innerText = "Duration: " + duration + " days";
+        document.getElementById('selected-adults').innerText = "Adults: " + selectedAdults;
+        document.getElementById('selected-children').innerText = "Children: " + selectedChildren;
+
+    
+   
+    
+        sessionStorage.setItem('checkInDate', checkInDate);
+        sessionStorage.setItem('checkOutDate', checkOutDate);
+        sessionStorage.setItem('selectedAdults', selectedAdults);
+        sessionStorage.setItem('selectedChildren', selectedChildren);
+        sessionStorage.setItem('duration', duration);
+    
+        sessionStorage.setItem('fname',fname);
+        sessionStorage.setItem('email',email);
+        sessionStorage.setItem('phnumber',phnumber);
+    
+    
+      }
+
+    function calculateDuration(startDate, endDate) {
+        // Parse the dates
+        var start = new Date(startDate);
+        var end = new Date(endDate);
+
+        // Calculate the difference in milliseconds
+        var timeDifference = end - start;
+
+        // Calculate the number of days
+        var daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+        return daysDifference;
+    }
+
+
+
+
+
+        // Retrieve data from sessionStorage
+        const roomImage = sessionStorage.getItem("roomImage");
+        const roomTitle = sessionStorage.getItem("roomTitle");
+        const roomDescription = sessionStorage.getItem("roomDescription");
+        const roomPrice = sessionStorage.getItem("roomPrice");
+    
+        // Display data on the details page
+        document.getElementById("detailsImage").src = roomImage;
+        document.getElementById("detailsTitle").innerText = roomTitle;
+        document.getElementById("detailsDescription").innerText = roomDescription;
+        document.getElementById("detailsPrice").innerText = roomPrice;
+
+        document.getElementById("price").innerText = roomPrice;
+        document.getElementById("Subtotalprice").innerText = roomPrice;
+        document.getElementById("totalprice").innerText = roomPrice;
+
+
+
+
+
+        //for final page
+        
+      //forms
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
+        
+        function showTab(n) {
+          // This function will display the specified tab of the form...
+          var x = document.getElementsByClassName("step");
+          x[n].style.display = "block";
+          //... and fix the Previous/Next buttons:
+          if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+            
+          } else {
+            document.getElementById("prevBtn").style.display = "inline";
+           
+          }
+          if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Book Now";
+            
+          } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+            
+          }
+          //... and run a function that will display the correct step indicator:
+          fixStepIndicator(n)
+        }
+        
+        function nextPrev(n) {
+          // This function will figure out which tab to display
+          var x = document.getElementsByClassName("step");
+          // Exit the function if any field in the current tab is invalid:
+          if (n == 1 && !validateForm()) return false;
+          // Hide the current tab:
+          x[currentTab].style.display = "none";
+          // Increase or decrease the current tab by 1:
+          currentTab = currentTab + n;
+          // if you have reached the end of the form...
+          if (currentTab >= x.length) {
+            // ... the form gets submitted:
+
+            
+            // Modify the URL to the desired next page
+              window.location.href = "Final.html";
+              alert("Your Booking Down 'Click OK' to See the RECEIPT")
+
+           // document.getElementById("signUpForm").submit();
+            return false;
+          }
+          // Otherwise, display the correct tab:
+          showTab(currentTab);
+        }
+        
+        function validateForm() {
+          // This function deals with validation of the form fields
+          var x, y, i, valid = true;
+          x = document.getElementsByClassName("step");
+          y = x[currentTab].getElementsByTagName("input");
+          // A loop that checks every input field in the current tab:
+          for (i = 0; i < y.length; i++) {
+            // If a field is empty...
+            if (y[i].value == "") {
+              // add an "invalid" class to the field:
+              y[i].className += " invalid";
+              // and set the current valid status to false
+              valid = false;
+            }
+          }
+          // If the valid status is true, mark the step as finished and valid:
+          if (valid) {
+            document.getElementsByClassName("stepIndicator")[currentTab].className += " finish";
+          }
+          return valid; // return the valid status
+        }
+        
+        function fixStepIndicator(n) {
+          // This function removes the "active" class of all steps...
+          var i, x = document.getElementsByClassName("stepIndicator");
+          for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+          }
+          //... and adds the "active" class on the current step:
+          x[n].className += " active";
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </script>
+
+    
+</body>
+</html>
